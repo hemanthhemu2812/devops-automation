@@ -1,0 +1,17 @@
+pipeline{
+    agent any{
+        stages{
+            stage('build maven'){
+                steps{
+                    checkout scmGit(branches: [[name: '*/main']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/hemanthhemu2812/devops-automation.git']])
+                    sh "mvn clean install"
+                }
+            }
+            stage('build docker images'){
+                steps{
+                    sh "docker build -t hemanth2812/demoimage ."
+                }
+            }
+        }
+    }
+}
